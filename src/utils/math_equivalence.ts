@@ -91,9 +91,9 @@ export function stripString(str: string): string {
   string = string.replace(/dfrac/g, 'frac');
   string = string.replace(/\\left/g, '');
   string = string.replace(/\\right/g, '');
-  string = string.replace(/^{\\circ}/g, '');
-  string = string.replace(/^\\circ/g, '');
-  string = string.replace(/\\$/g, '');
+  string = string.replace(/\^{\\circ}/g, '');
+  string = string.replace(/\^\\circ/g, '');
+  string = string.replace(/\\\$/g, '');
   string = removeRightUnits(string);
   string = string.replace(/\\%/g, '');
   string = string.replace(/\%/g, '');

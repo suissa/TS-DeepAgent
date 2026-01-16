@@ -18,7 +18,7 @@ export function extractBetween(text: string, startMarker: string, endMarker: str
   try {
     const escapedStart = startMarker.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     const escapedEnd = endMarker.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    const pattern = `${escapedEnd}(.*?)${escapedStart}`;
+    const pattern = `${escapedStart}(.*?)${escapedEnd}`;
     const regex = new RegExp(pattern, 's');
     const match = text.match(regex);
     if (match && match[1]) {

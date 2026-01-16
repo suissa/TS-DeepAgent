@@ -30,7 +30,7 @@ export class FileProcessor {
   }
 }
 
-export async function process_file_content(_processor: FileProcessor | null, file_name: string): Promise<{ content: string; error?: string }> {
+export async function process_file_content(_processor: FileProcessor | null, file_name: string): Promise<{ content?: string; error?: string }> {
   try {
     const content = `Content of ${file_name}`;
     return { content };
