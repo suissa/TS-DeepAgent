@@ -53,7 +53,7 @@ function fixASlashB(str: string): string {
 }
 
 function removeRightUnits(str: string): string {
-  if ('\\text{ ' in str) {
+  if (str.indexOf('\\text{ ') !== -1) {
     const splits = str.split('\\text{ ');
     if (splits.length === 2) {
       return splits[0];
@@ -63,7 +63,7 @@ function removeRightUnits(str: string): string {
 }
 
 function fixSqrt(str: string): string {
-  if ('\\sqrt' not in str) {
+  if (str.indexOf('\\sqrt') === -1) {
     return str;
   }
   const splits = str.split('\\sqrt');

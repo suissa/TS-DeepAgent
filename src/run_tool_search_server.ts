@@ -16,9 +16,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.post('/retrieve', async (req,  try {
-    const body: RetrieveRequest = req.body res) => {
-;
+app.post('/retrieve', async (req: express.Request, res: express.Response) => {
+  try {
+    const body: RetrieveRequest = req.body;
     console.log(`Retrieving for query: ${body.query}`);
     const results: any[] = [];
     res.json({ results });

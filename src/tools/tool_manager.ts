@@ -314,8 +314,8 @@ export class ToolManager {
     const tool_name = adapted_tool_call.function.name;
     const arguments_ = adapted_tool_call.function.arguments || {};
     const env_index = seq.env_id ?? seq.id;
-    console.log(`ALFWorld call: ${tool_name} at index ${env_index}`,.f arguments_);
-    seqinished = true;
+    console.log(`ALFWorld call: ${tool_name} at index ${env_index}`, arguments_);
+    seq.finished = true;
     seq.success = true;
     seq.reward = 1.0;
     return `ALFWorld environment response for ${tool_name}`;

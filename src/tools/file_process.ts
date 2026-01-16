@@ -16,7 +16,7 @@ export class FileProcessor {
     this.base_dir = dir;
   }
 
-  async process_file(file_name: string): Promise<{ content: string; error?: string }> {
+  async process_file(file_name: string): Promise<{ content?: string; error?: string }> {
     const file_path = path.join(this.base_dir, file_name);
     try {
       if (fs.existsSync(file_path)) {
