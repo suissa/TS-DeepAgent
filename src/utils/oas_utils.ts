@@ -202,7 +202,7 @@ export function reduceOpenapiSpec(
         docs
       ) {
         const name = `${operationName.toUpperCase()} ${route}`;
-        const description = (docs as any).description || null;
+        const description = (docs as any)?.description || null;
         let processedDocs = docs;
         if (dereference) {
           processedDocs = dereferenceRefs(docs, spec);

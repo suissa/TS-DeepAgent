@@ -17,6 +17,7 @@ export class ToolRetriever {
   load_cache: boolean;
   corpus_identifier: string;
   embedder: any;
+  corpus_embeddings: any;
 
   constructor(
     corpus: string[],
@@ -33,6 +34,9 @@ export class ToolRetriever {
     this.load_cache = load_cache;
     this.corpus_identifier = corpus_identifier || this._generate_corpus_identifier();
     this.embedder = this.build_retrieval_embedder();
+  }
+
+  init_corpus_embeddings(): void {
     this.corpus_embeddings = this.build_corpus_embeddings();
   }
 

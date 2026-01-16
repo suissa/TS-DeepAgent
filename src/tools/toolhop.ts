@@ -20,13 +20,14 @@ export class ToolHopRetriever extends ToolRetriever {
 
   constructor(corpus_json_path: string, model_path: string, cache_dir: string, load_cache: boolean = true) {
     console.log('Initializing ToolHopRetriever...');
-    const { corpus, corpus2tool } = this.buildCorpus(corpus_json_path);
+    const { corpus, corpus2tool } = ToolHopRetriever.buildCorpus(corpus_json_path);
     super(corpus, corpus2tool, model_path, cache_dir, load_cache, corpus_json_path);
     this.corpus_json_path = corpus_json_path;
+    this.init_corpus_embeddings();
     console.log('ToolHopRetriever initialized.');
   }
 
-  private buildCorpus(corpus_json_path: string): { corpus: string[]; corpus2tool: { [key: string]: ToolDoc } } {
+  private static buildCorpus(corpus_json_path: string): { corpus: string[]; corpus2tool: { [key: string]: ToolDoc } } {
     const data = readToolhopFile(corpus_json_path);
     const corpus: string[] = [];
     const corpus2tool: { [key: string]: ToolDoc } = {};
@@ -52,9 +53,9 @@ export class ToolHopRetriever extends ToolRetriever {
     return { corpus, corpus2tool };
   }
 
-  retrieving(query: string, top_k: number = 5, executable_tools: any[] | null = null): ToolDoc[] {
+  async retrieving(query: string, top_k: number = 5, executable_tools: any[] | null = null): Promise<ToolDoc[]> {
     console.log(`Retrieving top ${top_k} tools for query: '${query}'`);
-    const candidate_docs = super.retrieving(query, top_k * 20);
+    const candidate_docs = await super.retrieving(query, top_k * 20);
     if (!executable_tools) executable_tools = [];
     const executable_tool_docs_map: { [key: string]: ToolDoc } = {};
     const executable_tool_docs_map_name: { [key: string]: ToolDoc } = {};

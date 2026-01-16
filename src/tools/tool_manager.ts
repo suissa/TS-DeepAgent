@@ -133,7 +133,7 @@ export class ToolManager {
     } else {
       this.caller = null;
     }
-    this.readWebCache();
+    this.read_web_cache();
   }
 
   private async initializeToolbench(args: Args): Promise<void> {
@@ -245,7 +245,7 @@ export class ToolManager {
     return name;
   }
 
-  retrieve_tools(query: string, top_k: number, executable_tools?: any[]): any[] {
+  async retrieve_tools(query: string, top_k: number, executable_tools?: any[]): Promise<any[]> {
     if (this.args.dataset_name === 'api_bank' && this.retriever) {
       try {
         return this.retriever.retrieving(query, top_k);
@@ -258,7 +258,12 @@ export class ToolManager {
       throw new Error('Remote tool retriever API base not configured');
     }
     try {
-      const payload = {
+      const payload: {
+        dataset_name: string;
+        query: string;
+        top_k: number;
+        executable_tools?: any[];
+      } = {
         dataset_name: this.args.dataset_name,
         query,
         top_k: parseInt(String(top_k), 10),
@@ -267,9 +272,12 @@ export class ToolManager {
         payload.executable_tools = executable_tools;
       }
       const url = api_base.replace(/\/$/, '') + '/retrieve';
-      return axios.post(url, payload, { timeout: 60000 })
-        .then(resp => resp.data?.results || [])
-        .catch(() => []);
+      try {
+        const resp = await axios.post(url, payload, { timeout: 60000 });
+        return resp.data?.results || [];
+      } catch {
+        return [];
+      }
     } catch {
       return [];
     }
